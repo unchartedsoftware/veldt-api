@@ -49,8 +49,10 @@ type TileBatchRequest struct {
 
 // TileBatchResponse represents a batched tile response.
 type TileBatchResponse struct {
-	Tile  *tile.Response `json:"tile"`
-	Store *store.Request `json:"store"`
+	Tile    *tile.Request  `json:"tile"`
+	Store   *store.Request `json:"store"`
+	Success bool           `json:"success"`
+	Err     error          `json:"-"`
 }
 
 // MetaBatchRequest represents a batched meta data request.
@@ -61,8 +63,10 @@ type MetaBatchRequest struct {
 
 // MetaBatchResponse  represents a batched meta data response.
 type MetaBatchResponse struct {
-	Meta  *meta.Response `json:"meta"`
-	Store *store.Request `json:"store"`
+	Meta    *meta.Request  `json:"meta"`
+	Store   *store.Request `json:"store"`
+	Success bool           `json:"success"`
+	Err     error          `json:"-"`
 }
 
 func parseQueryParams(params url.Values) map[string]interface{} {
@@ -92,10 +96,12 @@ func NewTileBatchRequest(msg []byte) (*TileBatchRequest, error) {
 }
 
 // NewTileBatchResponse instantiates a batched tile response.
-func NewTileBatchResponse(tileRes *tile.Response, storeReq *store.Request) *TileBatchResponse {
+func NewTileBatchResponse(tileReq *tile.Request, storeReq *store.Request, err error) *TileBatchResponse {
 	req := &TileBatchResponse{
-		Tile:  tileRes,
-		Store: storeReq,
+		Tile:    tileReq,
+		Store:   storeReq,
+		Success: (err == nil),
+		Err:     err,
 	}
 	// alias
 	// tile
@@ -128,10 +134,12 @@ func NewMetaBatchRequest(msg []byte) (*MetaBatchRequest, error) {
 }
 
 // NewMetaBatchResponse instantiates a batched meta data reponse.
-func NewMetaBatchResponse(metaRes *meta.Response, storeReq *store.Request) *MetaBatchResponse {
+func NewMetaBatchResponse(metaRes *meta.Request, storeReq *store.Request, err error) *MetaBatchResponse {
 	req := &MetaBatchResponse{
-		Meta:  metaRes,
-		Store: storeReq,
+		Meta:    metaRes,
+		Store:   storeReq,
+		Success: (err == nil),
+		Err:     err,
 	}
 	// alias
 	// meta

@@ -1,6 +1,7 @@
 package batch
 
 import (
+	"errors"
 	"net/http"
 	"sync"
 	"time"
@@ -68,10 +69,9 @@ func (t *TileDispatcher) Close() {
 
 func (t *TileDispatcher) listenForResponses() {
 	for res := range t.RespChan {
-		tileRes := res.Tile
 		// log error if there is one
-		if tileRes.Error != nil {
-			log.Warn(tileRes.Error)
+		if res.Err != nil {
+			log.Warn(res.Err)
 		}
 		// write response to websocket
 		t.Conn.SetWriteDeadline(time.Now().Add(writeWait))
@@ -92,48 +92,48 @@ func (t *TileDispatcher) dispatchRequest(tileReq *tile.Request, storeReq *store.
 	// when the tile is ready
 	promise.OnComplete(func(res interface{}) {
 		// cast to tile response
-		tileRes := res.(*tile.Response)
+		err, _ := res.(error)
 		// pass to response channel
-		t.RespChan <- routes.NewTileBatchResponse(tileRes, storeReq)
+		t.RespChan <- routes.NewTileBatchResponse(tileReq, storeReq, err)
 		// decrement the pending response wait group
 		t.WaitGroup.Done()
 	})
 }
 
-func (t *TileDispatcher) getRequest() (*tile.Request, *store.Request, error) {
+func (t *TileDispatcher) getRequest() (*routes.TileBatchRequest, error) {
 	// wait on read
 	_, msg, err := t.Conn.ReadMessage()
 	if err != nil {
-		return nil, nil, err
+		return nil, err
 	}
 	// parse into tile request
 	req, err := routes.NewTileBatchRequest(msg)
 	if err != nil {
 		// parsing errors should not actually return errors or else the
 		// connection will be lost
-		return nil, nil, nil
+		return nil, nil
 	}
-	return req.Tile, req.Store, nil
+	return req, nil
 }
 
 func (t *TileDispatcher) listenForRequests() {
 	for {
 		// wait on tile request
-		tileReq, storeReq, err := t.getRequest()
+		req, err := t.getRequest()
 		if err != nil {
 			t.ErrChan <- err
 			break
 		}
 		// if no request could be parsed, return failure immediately
-		if tileReq == nil || storeReq == nil {
+		if req == nil {
 			t.RespChan <- &routes.TileBatchResponse{
-				Tile: &tile.Response{
-					Success: false,
-				},
+				Success: false,
+				Err:     errors.New("Unable to parse message"),
 			}
+			// listen for next message
 			continue
 		}
 		// dispatch the request
-		go t.dispatchRequest(tileReq, storeReq)
+		go t.dispatchRequest(req.Tile, req.Store)
 	}
 }
