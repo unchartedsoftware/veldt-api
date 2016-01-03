@@ -47,7 +47,14 @@ func Handler(c web.C, w http.ResponseWriter, r *http.Request) {
 		handleTileErr(w)
 		return
 	}
-	// get tile hash
+	// ensure it's generated
+	err = tile.GenerateTile(tileReq, storeReq)
+	if err != nil {
+		log.Warn(err)
+		handleTileErr(w)
+		return
+	}
+	// get tile data from store
 	tileData, err := tile.GetTileFromStore(tileReq, storeReq)
 	if err != nil {
 		log.Warn(err)

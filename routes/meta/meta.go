@@ -6,7 +6,6 @@ import (
 
 	"github.com/unchartedsoftware/prism/generation/meta"
 	"github.com/unchartedsoftware/prism/log"
-	"github.com/unchartedsoftware/prism/store"
 	"github.com/zenazn/goji/web"
 
 	"github.com/unchartedsoftware/prism-server/routes"
@@ -27,15 +26,6 @@ func handleMetaErr(w http.ResponseWriter) {
 	fmt.Fprint(w, `{"status": "error"}`)
 }
 
-func dispatchRequest(metaChan chan *meta.Response, metaReq *meta.Request, storeReq *store.Request) {
-	// get the meta data promise
-	promise := meta.GetMeta(metaReq, storeReq)
-	// when the meta data is ready
-	promise.OnComplete(func(res interface{}) {
-		metaChan <- res.(*meta.Response)
-	})
-}
-
 // Handler represents the HTTP route response handler.
 func Handler(c web.C, w http.ResponseWriter, r *http.Request) {
 	// set content type response header
@@ -54,18 +44,21 @@ func Handler(c web.C, w http.ResponseWriter, r *http.Request) {
 		handleMetaErr(w)
 		return
 	}
-	// create channel to pass metadata
-	metaChan := make(chan *meta.Response)
-	// dispatch the request async and wait on channel
-	go dispatchRequest(metaChan, metaReq, storeReq)
-	// wait on response
-	metaRes := <-metaChan
-	if metaRes.Error != nil {
-		log.Warn(metaRes.Error)
+	// ensure it's generated
+	err = meta.GenerateMeta(metaReq, storeReq)
+	if err != nil {
+		log.Warn(err)
 		handleMetaErr(w)
 		return
 	}
-	// send success response
+	// get meta data from store
+	metaData, err := meta.GetMetaFromStore(metaReq, storeReq)
+	if err != nil {
+		log.Warn(err)
+		handleMetaErr(w)
+		return
+	}
+	// send response
 	w.WriteHeader(200)
-	w.Write(metaRes.Meta)
+	w.Write(metaData)
 }

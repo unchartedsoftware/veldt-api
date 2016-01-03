@@ -1,6 +1,5 @@
 github.com/Sirupsen/logrus a22723f16efea2e89b7bd67d10ed077c47c14eb4
-github.com/fanliao/go-promise 1890db352a72f9e6c6219c20111355cddc795297
 github.com/gorilla/websocket 361d4c0ffd78338ebe0a9e6320cdbe115d7dc026
 github.com/mgutz/ansi c286dcecd19ff979eeb73ea444e479b903f2cfcb
-github.com/unchartedsoftware/prism 87590b91fea381ccde40e95320de74f0e8f0c685
+github.com/unchartedsoftware/prism 4696d6645ec1dd23b1e53c902dd816ddf9db9f76
 github.com/zenazn/goji 739f05c9497895aee8d398a8ff38fb0517c4d670
