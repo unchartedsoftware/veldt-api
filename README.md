@@ -21,7 +21,7 @@ cd $GOPATH/src/github.com/unchartedsoftware/prism-server && git pull
 Install all dependencies:
 
 ```bash
-	make deps
+make deps
 ```
 
 ## Usage
@@ -92,7 +92,7 @@ go run main.go \
 Generate meta data:
 
 ```bash
-	curl -X GET 'http://localhost:8080/default/elasticsearch_local/test_index/redis/redis_local'
+curl -X GET 'http://localhost:8080/default/elasticsearch_local/test_index/redis/redis_local'
 ```
 
 This HTTP request results in the following actions:
@@ -102,7 +102,7 @@ This HTTP request results in the following actions:
 Generate a tile:
 
 ```bash
-	curl -X GET 'http://localhost:8080/heatmap/elasticsearch_local/test_index/redis/redis_local/4/12/12'
+curl -X GET 'http://localhost:8080/heatmap/elasticsearch_local/test_index/redis/redis_local/4/12/12'
 ```
 
 This HTTP request results in the following actions:
