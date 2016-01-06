@@ -1,10 +1,10 @@
 package middleware
 
 import (
+	"compress/gzip"
 	"io"
 	"net/http"
 	"strings"
-	"compress/gzip"
 )
 
 type gzipResponseWriter struct {
@@ -36,7 +36,7 @@ func Gzip(h http.Handler) http.Handler {
 		w.Header().Set("Content-Encoding", "gzip")
 		gz := gzip.NewWriter(w)
 		gzw := gzipResponseWriter{
-			Writer: gz,
+			Writer:         gz,
 			ResponseWriter: w,
 		}
 		h.ServeHTTP(gzw, r)

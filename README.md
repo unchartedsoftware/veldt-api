@@ -92,19 +92,19 @@ go run main.go \
 Generate meta data:
 
 ```bash
-curl -X GET 'http://localhost:8080/default/elasticsearch_local/test_index/redis/redis_local'
+curl -X GET 'http://localhost:8080/default/elasticsearch_local/test/redis/redis_local'
 ```
 
 This HTTP request results in the following actions:
-- Generation of meta data using the 'default' generator on the `test_index` of an elasticsearch instance running on the endpoint aliased by `elasticsearch_local`.
+- Generation of meta data using the `default` generator on the `test` index of an elasticsearch instance running on the endpoint aliased by `elasticsearch_local`.
 - Caching of the generated data in a `redis` store running on the endpoint aliased by `redis_local`.
 
 Generate a tile:
 
 ```bash
-curl -X GET 'http://localhost:8080/heatmap/elasticsearch_local/test_index/redis/redis_local/4/12/12'
+curl -X GET 'http://localhost:8080/heatmap/elasticsearch_local/test/redis/redis_local/4/12/12'
 ```
 
 This HTTP request results in the following actions:
-- Generation of a tile using the 'heatmap' generator on the `test_index` of an elasticsearch instance running on the endpoint aliased by `elasticsearch_local`.
+- Generation of a tile using the `heatmap` generator on the `test` index of an elasticsearch instance running on the endpoint aliased by `elasticsearch_local`.
 - Caching of the generated tile in a `redis` store running on the endpoint aliased by `redis_local`.
