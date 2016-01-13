@@ -6,17 +6,23 @@ import (
 	"strings"
 	"time"
 
+	log "github.com/unchartedsoftware/plog"
 	"github.com/vova616/xxhash"
 	"github.com/zenazn/goji/web"
 	"github.com/zenazn/goji/web/mutil"
-
-	"github.com/unchartedsoftware/prism/log"
 )
 
-// Logger is a middleware that logs each request. When standard output is a
-// TTY, Logger will print in color, otherwise it will print in black and white.
+// Log is a middleware that logs each request. When standard output is a
+// TTY, Log will print in color, otherwise it will print in black and white.
 func Log(c *web.C, h http.Handler) http.Handler {
 	fn := func(w http.ResponseWriter, r *http.Request) {
+		if isWebsocketUpgrade(r) {
+			// do not log websocket connections
+			// TODO: intercept and log the beginning and the end of
+			// the connection.
+			h.ServeHTTP(w, r)
+			return
+		}
 		lw := mutil.WrapWriter(w)
 		t1 := time.Now()
 		h.ServeHTTP(lw, r)

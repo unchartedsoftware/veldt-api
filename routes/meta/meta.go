@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"net/http"
 
+	log "github.com/unchartedsoftware/plog"
 	"github.com/unchartedsoftware/prism/generation/meta"
-	"github.com/unchartedsoftware/prism/log"
 	"github.com/zenazn/goji/web"
 
 	"github.com/unchartedsoftware/prism-server/routes"

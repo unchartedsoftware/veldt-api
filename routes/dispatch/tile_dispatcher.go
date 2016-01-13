@@ -4,8 +4,8 @@ import (
 	"errors"
 	"net/http"
 
+	log "github.com/unchartedsoftware/plog"
 	"github.com/unchartedsoftware/prism/generation/tile"
-	"github.com/unchartedsoftware/prism/log"
 
 	"github.com/unchartedsoftware/prism-server/routes"
 )
