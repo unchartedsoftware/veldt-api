@@ -13,7 +13,8 @@ import (
 
 const (
 	// Route represents the HTTP route for the resource.
-	Route = "/:" + routes.TileType +
+	Route = "/tile" +
+		"/:" + routes.TileType +
 		"/:" + routes.TileEndpoint +
 		"/:" + routes.TileIndex +
 		"/:" + routes.StoreType +

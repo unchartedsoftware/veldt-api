@@ -8,8 +8,11 @@ import (
 func ParseCommandLine() *Conf {
 	// port the server runs on
 	port := flag.String("port", "8080", "Port to bind HTTP server")
-	// public dir that will be statically served
-	public := flag.String("public", "./build/public", "The public directory to static serve from")
+
+	// static serve dir flags
+	var publicDirs StaticDirs
+	flag.Var(&publicDirs, "public", "The public directories to static serve from")
+
 	// alias flags
 	aliases := make(AliasMap)
 	flag.Var(&aliases, "alias", "Alias a string value by another string.")
@@ -20,7 +23,7 @@ func ParseCommandLine() *Conf {
 	// Set, save, and return config
 	config := &Conf{
 		Port:       *port,
-		Public:     *public,
+		Public:     publicDirs,
 		Aliases:    aliases,
 		InvAliases: invertAliases(aliases),
 	}

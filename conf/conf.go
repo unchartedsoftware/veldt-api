@@ -3,7 +3,7 @@ package conf
 // Conf represents all the runtime flags passed to the binary.
 type Conf struct {
 	Port       string
-	Public     string
+	Public     StaticDirs
 	Aliases    AliasMap
 	InvAliases AliasMap
 }

@@ -13,7 +13,8 @@ import (
 
 const (
 	// Route represents the HTTP route for the resource.
-	Route = "/:" + routes.MetaType +
+	Route = "/meta" +
+		"/:" + routes.MetaType +
 		"/:" + routes.MetaEndpoint +
 		"/:" + routes.MetaIndex +
 		"/:" + routes.StoreType +
