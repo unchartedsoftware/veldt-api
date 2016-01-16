@@ -7,7 +7,7 @@ Requires the [Go](https://golang.org/) programming language binaries with the `G
 ## Installation
 
 ```bash
-go get github.com/unchartedsoftware/prism
+go get github.com/unchartedsoftware/prism-server
 ```
 
 ## Usage
