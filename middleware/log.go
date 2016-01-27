@@ -73,11 +73,11 @@ func printResp(r *http.Request, w mutil.WriterProxy, dt time.Duration) {
 	}
 	buf.WriteString(" in ")
 	if dt < 500*time.Millisecond {
-		cW(&buf, nGreen, "%s", dt)
+		cW(&buf, nGreen, "%.2fms", dt.Seconds() * 1000)
 	} else if dt < 5*time.Second {
-		cW(&buf, nYellow, "%s", dt)
+		cW(&buf, nYellow, "%.2fms", dt.Seconds() * 1000)
 	} else {
-		cW(&buf, nRed, "%s", dt)
+		cW(&buf, nRed, "%.2fms", dt.Seconds() * 1000)
 	}
 	buf.WriteString(" to ")
 	buf.WriteString(r.RemoteAddr)
