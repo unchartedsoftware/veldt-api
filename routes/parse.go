@@ -158,19 +158,19 @@ func NewTileRequest(params map[string]string, queryParams url.Values) (*tile.Req
 	y, ey := strconv.ParseUint(params[TileY], 10, 32)
 	z, ez := strconv.ParseUint(params[TileZ], 10, 32)
 	if ex != nil || ey != nil || ez != nil {
-		return nil, errors.New("Unable to parse tile coordinate from request")
+		return nil, errors.New("Unable to parse coordinate from tile request")
 	}
 	typ, ok := params[TileType]
 	if !ok {
-		return nil, errors.New("Type missing from meta request")
+		return nil, errors.New("Type missing from tile request")
 	}
 	endpoint, ok := params[TileEndpoint]
 	if !ok {
-		return nil, errors.New("Endpoint missing from meta request")
+		return nil, errors.New("Endpoint missing from tile request")
 	}
 	index, ok := params[TileIndex]
 	if !ok {
-		return nil, errors.New("Index missing from meta request")
+		return nil, errors.New("Index missing from tile request")
 	}
 	return &tile.Request{
 		Coord: &binning.TileCoord{
