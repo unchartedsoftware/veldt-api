@@ -15,10 +15,8 @@ const (
 	// Route represents the HTTP route for the resource.
 	Route = "/meta" +
 		"/:" + routes.MetaType +
-		"/:" + routes.MetaEndpoint +
 		"/:" + routes.MetaIndex +
-		"/:" + routes.StoreType +
-		"/:" + routes.StoreEndpoint
+		"/:" + routes.StoreType
 )
 
 func handleMetaErr(w http.ResponseWriter) {
@@ -38,22 +36,15 @@ func Handler(c web.C, w http.ResponseWriter, r *http.Request) {
 		handleMetaErr(w)
 		return
 	}
-	// parse store req from URL
-	storeReq, err := routes.NewStoreRequest(c.URLParams)
-	if err != nil {
-		log.Warn(err)
-		handleMetaErr(w)
-		return
-	}
 	// ensure it's generated
-	err = meta.GenerateMeta(metaReq, storeReq)
+	err = meta.GenerateMeta(metaReq)
 	if err != nil {
 		log.Warn(err)
 		handleMetaErr(w)
 		return
 	}
 	// get meta data from store
-	metaData, err := meta.GetMetaFromStore(metaReq, storeReq)
+	metaData, err := meta.GetMetaFromStore(metaReq)
 	if err != nil {
 		log.Warn(err)
 		handleMetaErr(w)

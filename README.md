@@ -32,7 +32,6 @@ import (
 	"github.com/unchartedsoftware/prism/store"
 	"github.com/unchartedsoftware/prism/store/redis"
 
-	"github.com/unchartedsoftware/prism-server/conf"
 	"github.com/unchartedsoftware/prism-server/routes/dispatch"
 	"github.com/unchartedsoftware/prism-server/routes/meta"
 	"github.com/unchartedsoftware/prism-server/routes/tile"
@@ -42,10 +41,10 @@ func main() {
 	// Parse commandline flags into config struct
 	config := conf.ParseCommandLine()
 	// Register the in-memory store
-	store.Register("redis", redis.NewConnection)
+	store.Register("redis", redis.NewConnection("localhost", "6379"))
 	// Register a custom tile and meta data generators
-	tile.Register("heatmap", elastic.NewHeatmapTile)
-	meta.Register("default", elastic.NewDefaultMeta)
+	tile.Register("heatmap", elastic.NewHeatmapTile("http://localhost", "9200"))
+	meta.Register("default", elastic.NewDefaultMeta("http://localhost", "9200"))
     // Set the dispatching routes, these endpoints are used to initiate tiling
     // and meta data generation requests over websocket, providing full duplex
     // communication and allowing the server to inform the client the moment the
@@ -60,37 +59,34 @@ func main() {
 	// metadata. If no data is ready this endpoint will attempt to generate it.
     goji.Get(meta.Route, meta.Handler)
 	// Greedy route last for static serving
-	goji.Get("/*", http.FileServer(http.Dir(config.Public)))
+	goji.Get("/*", http.FileServer(http.Dir("./public")))
 	// Start the server
 	goji.Serve()
 }
 ```
 
-Start the server while providing commandline arguments.
+Start the server:
 
 ```bash
-go run main.go \
-    -public="./public" \
-	-alias="redis_local=localhost:6379" \
-    -alias="elasticsearch_local=http://localhost:9200"
+go run main.go
 ```
 
 Generate meta data:
 
 ```bash
-curl -X GET 'http://localhost:8080/default/elasticsearch_local/test/redis/redis_local'
+curl -X GET 'http://localhost:8080/default/test_index/redis'
 ```
 
 This HTTP request results in the following actions:
-- Generation of meta data using the `default` generator on the `test` index of an elasticsearch instance running on the endpoint aliased by `elasticsearch_local`.
-- Caching of the generated data in a `redis` store running on the endpoint aliased by `redis_local`.
+- Generation of meta data using the `default` generator on the `test_index` index of an elasticsearch instance running on `http://localhost:9200`
+- Caching of the generated data in a `redis` store running on `localhost:6379`.
 
 Generate a tile:
 
 ```bash
-curl -X GET 'http://localhost:8080/heatmap/elasticsearch_local/test/redis/redis_local/4/12/12'
+curl -X GET 'http://localhost:8080/heatmap/test_index/redis/4/12/12'
 ```
 
 This HTTP request results in the following actions:
-- Generation of a tile using the `heatmap` generator on the `test` index of an elasticsearch instance running on the endpoint aliased by `elasticsearch_local`.
-- Caching of the generated tile in a `redis` store running on the endpoint aliased by `redis_local`.
+- Generation of a tile using the `heatmap` generator on the `test` index of an elasticsearch instance running on `http://localhost:9200`
+- Caching of the generated tile in a `redis` store running on `localhost:6379`.

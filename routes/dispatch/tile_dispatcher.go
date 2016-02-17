@@ -17,10 +17,10 @@ const (
 
 func handleTileRequest(d *Dispatcher, msg []byte) {
 	// parse the tile request
-	req, err := routes.NewTileBatchRequest(msg)
+	tileReq, err := routes.NewTileBatchRequest(msg)
 	if err != nil {
 		// parsing error, send back a failure response
-		err := d.SendResponse(&routes.TileBatchResponse{
+		err := d.SendResponse(&routes.TileResponse{
 			Success: false,
 			Err:     errors.New("Unable to parse message"),
 		})
@@ -28,12 +28,12 @@ func handleTileRequest(d *Dispatcher, msg []byte) {
 		return
 	}
 	// generate tile and wait on response
-	err = tile.GenerateTile(req.Tile, req.Store)
+	err = tile.GenerateTile(tileReq)
 	if err != nil {
 		log.Warn(err)
 	}
 	// create response
-	res := routes.NewTileBatchResponse(req.Tile, req.Store, err)
+	res := routes.NewTileResponse(tileReq, err)
 	// send response
 	err = d.SendResponse(res)
 	if err != nil {

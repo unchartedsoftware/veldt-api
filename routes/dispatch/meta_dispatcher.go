@@ -17,10 +17,10 @@ const (
 
 func handleMetaRequest(d *Dispatcher, msg []byte) {
 	// parse the meta request
-	req, err := routes.NewMetaBatchRequest(msg)
+	metaReq, err := routes.NewMetaBatchRequest(msg)
 	if err != nil {
 		// parsing error, send back a failure response
-		err := d.SendResponse(&routes.MetaBatchResponse{
+		err := d.SendResponse(&routes.MetaResponse{
 			Success: false,
 			Err:     errors.New("Unable to parse message"),
 		})
@@ -28,12 +28,12 @@ func handleMetaRequest(d *Dispatcher, msg []byte) {
 		return
 	}
 	// generate meta data and wait on response
-	err = meta.GenerateMeta(req.Meta, req.Store)
+	err = meta.GenerateMeta(metaReq)
 	if err != nil {
 		log.Warn(err)
 	}
 	// create response
-	res := routes.NewMetaBatchResponse(req.Meta, req.Store, err)
+	res := routes.NewMetaResponse(metaReq, err)
 	// send response
 	err = d.SendResponse(res)
 	if err != nil {

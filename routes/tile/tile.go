@@ -15,10 +15,8 @@ const (
 	// Route represents the HTTP route for the resource.
 	Route = "/tile" +
 		"/:" + routes.TileType +
-		"/:" + routes.TileEndpoint +
 		"/:" + routes.TileIndex +
 		"/:" + routes.StoreType +
-		"/:" + routes.StoreEndpoint +
 		"/:" + routes.TileZ +
 		"/:" + routes.TileX +
 		"/:" + routes.TileY
@@ -41,22 +39,15 @@ func Handler(c web.C, w http.ResponseWriter, r *http.Request) {
 		handleTileErr(w)
 		return
 	}
-	// parse store req from URL
-	storeReq, err := routes.NewStoreRequest(c.URLParams)
-	if err != nil {
-		log.Warn(err)
-		handleTileErr(w)
-		return
-	}
 	// ensure it's generated
-	err = tile.GenerateTile(tileReq, storeReq)
+	err = tile.GenerateTile(tileReq)
 	if err != nil {
 		log.Warn(err)
 		handleTileErr(w)
 		return
 	}
 	// get tile data from store
-	tileData, err := tile.GetTileFromStore(tileReq, storeReq)
+	tileData, err := tile.GetTileFromStore(tileReq)
 	if err != nil {
 		log.Warn(err)
 		handleTileErr(w)
