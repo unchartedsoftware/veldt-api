@@ -38,8 +38,6 @@ import (
 )
 
 func main() {
-	// Parse commandline flags into config struct
-	config := conf.ParseCommandLine()
 	// Register the in-memory store
 	store.Register("redis", redis.NewConnection("localhost", "6379"))
 	// Register a custom tile and meta data generators
