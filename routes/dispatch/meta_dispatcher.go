@@ -1,7 +1,7 @@
 package dispatch
 
 import (
-	"errors"
+	"fmt"
 	"net/http"
 
 	log "github.com/unchartedsoftware/plog"
@@ -20,11 +20,16 @@ func handleMetaRequest(d *Dispatcher, msg []byte) {
 	metaReq, err := routes.NewMetaBatchRequest(msg)
 	if err != nil {
 		// parsing error, send back a failure response
-		err := d.SendResponse(&routes.MetaResponse{
-			Success: false,
-			Err:     errors.New("Unable to parse message"),
-		})
+		err := fmt.Errorf("Unable to parse meta request message: %s", string(msg))
+		// log error
 		log.Warn(err)
+		err = d.SendResponse(&routes.TileResponse{
+			Success: false,
+			Err:     err,
+		})
+		if err != nil {
+			log.Warn(err)
+		}
 		return
 	}
 	// generate meta data and wait on response
