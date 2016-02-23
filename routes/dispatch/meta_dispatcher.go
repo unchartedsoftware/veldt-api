@@ -23,7 +23,7 @@ func handleMetaRequest(d *Dispatcher, msg []byte) {
 		err := fmt.Errorf("Unable to parse meta request message: %s", string(msg))
 		// log error
 		log.Warn(err)
-		err = d.SendResponse(&routes.TileResponse{
+		err = d.SendResponse(&routes.MetaResponse{
 			Success: false,
 			Err:     err,
 		})
