@@ -53,6 +53,7 @@ func printResp(r *http.Request, w mutil.WriterProxy, dt time.Duration) {
 		}
 	}
 	if len(urlsplit) > 1 {
+		// hash query params
 		cW(&buf, bBlack, "?")
 		hash := xxhash.Checksum32([]byte(urlsplit[1]))
 		cW(&buf, randColor(hash), "%#x ", hash)
@@ -79,7 +80,11 @@ func printResp(r *http.Request, w mutil.WriterProxy, dt time.Duration) {
 	} else {
 		cW(&buf, nRed, "%.2fms", dt.Seconds()*1000)
 	}
-	buf.WriteString(" to ")
-	buf.WriteString(r.RemoteAddr)
-	log.Debug(buf.String())
+	//buf.WriteString(" to ")
+	//buf.WriteString(r.RemoteAddr)
+	if status < 500 {
+		log.Debug(buf.String())
+	} else {
+		log.Warn(buf.String())
+	}
 }
