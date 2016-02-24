@@ -32,8 +32,8 @@ func handleTileErr(w http.ResponseWriter) {
 func Handler(c web.C, w http.ResponseWriter, r *http.Request) {
 	// set content type response header
 	w.Header().Set("Content-Type", "application/json")
-	// parse tile req from URL
-	tileReq, err := routes.NewTileRequest(c.URLParams, r.URL.Query())
+	// parse tile req from URL and body
+	tileReq, err := routes.NewTileRequest(c.URLParams, r.Body)
 	if err != nil {
 		log.Warn(err)
 		handleTileErr(w)

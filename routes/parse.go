@@ -3,6 +3,7 @@ package routes
 import (
 	"encoding/json"
 	"errors"
+	"io"
 	"net/url"
 	"strconv"
 
@@ -99,25 +100,32 @@ func NewMetaResponse(metaReq *meta.Request, err error) *MetaResponse {
 	return r
 }
 
-// NewTileRequest instantiates a tile request from a URL and query params.
-func NewTileRequest(params map[string]string, queryParams url.Values) (*tile.Request, error) {
-	x, ex := strconv.ParseUint(params[TileX], 10, 32)
-	y, ey := strconv.ParseUint(params[TileY], 10, 32)
-	z, ez := strconv.ParseUint(params[TileZ], 10, 32)
+// NewTileRequest instantiates a tile request from a URL and body.
+func NewTileRequest(url map[string]string, body io.ReadCloser) (*tile.Request, error) {
+	x, ex := strconv.ParseUint(url[TileX], 10, 32)
+	y, ey := strconv.ParseUint(url[TileY], 10, 32)
+	z, ez := strconv.ParseUint(url[TileZ], 10, 32)
 	if ex != nil || ey != nil || ez != nil {
 		return nil, errors.New("Unable to parse coordinate from tile request")
 	}
-	typ, ok := params[TileType]
+	typ, ok := url[TileType]
 	if !ok {
 		return nil, errors.New("Type missing from tile request")
 	}
-	index, ok := params[TileIndex]
+	index, ok := url[TileIndex]
 	if !ok {
 		return nil, errors.New("Index missing from tile request")
 	}
-	store, ok := params[StoreType]
+	store, ok := url[StoreType]
 	if !ok {
 		return nil, errors.New("Store missing from tile request")
+	}
+	// parse params map
+	decoder := json.NewDecoder(body)
+	params := make(map[string]interface{})
+	err := decoder.Decode(&params)
+	if err != nil {
+		return nil, err
 	}
 	return &tile.Request{
 		Type:  typ,
@@ -127,7 +135,7 @@ func NewTileRequest(params map[string]string, queryParams url.Values) (*tile.Req
 			Y: uint32(y),
 			Z: uint32(z),
 		},
-		Params: parseQueryParams(queryParams),
+		Params: params,
 		Store:  store,
 	}, nil
 }
