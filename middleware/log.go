@@ -47,8 +47,7 @@ func printResp(r *http.Request, w mutil.WriterProxy, dt time.Duration) {
 		for _, c := range cs {
 			if c != "" {
 				cW(&buf, bBlack, "/")
-				hash := xxhash.Checksum32([]byte(c))
-				cW(&buf, randColor(hash), c)
+				cW(&buf, bBlue, c)
 			}
 		}
 	}
@@ -83,7 +82,7 @@ func printResp(r *http.Request, w mutil.WriterProxy, dt time.Duration) {
 	//buf.WriteString(" to ")
 	//buf.WriteString(r.RemoteAddr)
 	if status < 500 {
-		log.Debug(buf.String())
+		log.Info(buf.String())
 	} else {
 		log.Warn(buf.String())
 	}

@@ -57,7 +57,7 @@ func TileHandler(w http.ResponseWriter, r *http.Request) {
 	// listen for requests and respond
 	err = dispatcher.ListenAndRespond()
 	if err != nil {
-		log.Debug(err)
+		log.Info(err)
 	}
 	// clean up dispatcher internals
 	dispatcher.Close()
