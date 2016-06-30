@@ -2,12 +2,45 @@
 
 ## Dependencies
 
-Requires the [Go](https://golang.org/) programming language binaries with the `GOPATH` environment variable specified.
+- Requires the [Go](https://golang.org/) programming language binaries with the `GOPATH` environment variable specified.
 
 ## Installation
 
+### Using `go get`:
+
+If your project does not use the vendoring tool [Glide](https://glide.sh) to manage dependencies, you can install this package like you would any other:
+
 ```bash
-go get github.com/unchartedsoftware/prism-server
+go get github.com/unchartedsoftware/prism
+```
+
+While this is the simplest way to install the package, due to how `go get` resolves transitive dependencies it may result in version incompatibilities.
+
+### Using `glide get`:
+
+This is the recommended way to install the package and ensures all transitive dependencies are resolved to their compatible versions.
+
+```bash
+glide get github.com/unchartedsoftware/prism
+```
+
+NOTE: Requires [Glide](https://glide.sh) along with [Go](https://golang.org/) version 1.6, or version 1.5 with the `GO15VENDOREXPERIMENT` environment variable set to `1`.
+
+## Development
+
+Clone the repository:
+
+```bash
+mkdir $GOPATH/src/github.com/unchartedsoftware
+cd $GOPATH/src/github.com/unchartedsoftware
+git clone git@github.com:unchartedsoftware/prism-server.git
+```
+
+Install dependencies
+
+```bash
+cd prism-server
+make deps
 ```
 
 ## Usage
