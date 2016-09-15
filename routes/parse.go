@@ -17,6 +17,8 @@ const (
 	TileType = "tile-type"
 	// TileIndex represents the tile "index" component of the URL.
 	TileIndex = "tile-index"
+	// TileURI represets the tile "uri" component of the URL.
+	TileURI = "tile-uri"
 	// TileX represents the tile "x" component of the URL.
 	TileX = "x"
 	// TileY represents the tile "y" component of the URL.
@@ -69,7 +71,7 @@ func NewTileBatchRequest(msg []byte) (*tile.Request, error) {
 func NewTileResponse(tileReq *tile.Request, err error) *TileResponse {
 	r := &TileResponse{}
 	r.Type = tileReq.Type
-	r.Index = tileReq.Index
+	r.URI = tileReq.URI
 	r.Store = tileReq.Store
 	r.Coord = tileReq.Coord
 	r.Params = tileReq.Params
@@ -112,9 +114,9 @@ func NewTileRequest(url map[string]string, body io.ReadCloser) (*tile.Request, e
 	if !ok {
 		return nil, errors.New("Type missing from tile request")
 	}
-	index, ok := url[TileIndex]
+	uri, ok := url[TileURI]
 	if !ok {
-		return nil, errors.New("Index missing from tile request")
+		return nil, errors.New("URI missing from tile request")
 	}
 	store, ok := url[StoreType]
 	if !ok {
@@ -128,8 +130,8 @@ func NewTileRequest(url map[string]string, body io.ReadCloser) (*tile.Request, e
 		return nil, err
 	}
 	return &tile.Request{
-		Type:  typ,
-		Index: index,
+		Type: typ,
+		URI: uri,
 		Coord: &binning.TileCoord{
 			X: uint32(x),
 			Y: uint32(y),

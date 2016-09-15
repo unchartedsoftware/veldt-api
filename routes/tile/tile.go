@@ -15,7 +15,7 @@ const (
 	// Route represents the HTTP route for the resource.
 	Route = "/tile" +
 		"/:" + routes.TileType +
-		"/:" + routes.TileIndex +
+		"/:" + routes.TileURI +
 		"/:" + routes.StoreType +
 		"/:" + routes.TileZ +
 		"/:" + routes.TileX +
