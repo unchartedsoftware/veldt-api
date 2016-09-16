@@ -15,7 +15,7 @@ const (
 	// Route represents the HTTP route for the resource.
 	Route = "/meta" +
 		"/:" + routes.MetaType +
-		"/:" + routes.MetaIndex +
+		"/:" + routes.MetaURI +
 		"/:" + routes.StoreType
 )
 
