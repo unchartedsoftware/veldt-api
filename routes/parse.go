@@ -15,8 +15,8 @@ import (
 const (
 	// TileType represents the tile "type" component of the URL.
 	TileType = "tile-type"
-	// TileIndex represents the tile "index" component of the URL.
-	TileIndex = "tile-index"
+	// TileURI represets the tile "uri" component of the URL.
+	TileURI = "tile-uri"
 	// TileX represents the tile "x" component of the URL.
 	TileX = "x"
 	// TileY represents the tile "y" component of the URL.
@@ -26,8 +26,8 @@ const (
 
 	// MetaType represents the meta "type" component of the URL.
 	MetaType = "meta-type"
-	// MetaIndex represents the meta "index" component of the URL.
-	MetaIndex = "meta-index"
+	// MetaURI represents the meta "URI" component of the URL.
+	MetaURI = "meta-uri"
 
 	// StoreType represents the store "type" component of the URL.
 	StoreType = "store-type"
@@ -69,7 +69,7 @@ func NewTileBatchRequest(msg []byte) (*tile.Request, error) {
 func NewTileResponse(tileReq *tile.Request, err error) *TileResponse {
 	r := &TileResponse{}
 	r.Type = tileReq.Type
-	r.Index = tileReq.Index
+	r.URI = tileReq.URI
 	r.Store = tileReq.Store
 	r.Coord = tileReq.Coord
 	r.Params = tileReq.Params
@@ -93,7 +93,7 @@ func NewMetaBatchRequest(msg []byte) (*meta.Request, error) {
 func NewMetaResponse(metaReq *meta.Request, err error) *MetaResponse {
 	r := &MetaResponse{}
 	r.Type = metaReq.Type
-	r.Index = metaReq.Index
+	r.URI = metaReq.URI
 	r.Store = metaReq.Store
 	r.Success = (err == nil)
 	r.Err = err
@@ -112,9 +112,9 @@ func NewTileRequest(url map[string]string, body io.ReadCloser) (*tile.Request, e
 	if !ok {
 		return nil, errors.New("Type missing from tile request")
 	}
-	index, ok := url[TileIndex]
+	uri, ok := url[TileURI]
 	if !ok {
-		return nil, errors.New("Index missing from tile request")
+		return nil, errors.New("URI missing from tile request")
 	}
 	store, ok := url[StoreType]
 	if !ok {
@@ -128,8 +128,8 @@ func NewTileRequest(url map[string]string, body io.ReadCloser) (*tile.Request, e
 		return nil, err
 	}
 	return &tile.Request{
-		Type:  typ,
-		Index: index,
+		Type: typ,
+		URI:  uri,
 		Coord: &binning.TileCoord{
 			X: uint32(x),
 			Y: uint32(y),
@@ -146,9 +146,9 @@ func NewMetaRequest(params map[string]string) (*meta.Request, error) {
 	if !ok {
 		return nil, errors.New("Type missing from meta request")
 	}
-	index, ok := params[MetaIndex]
+	uri, ok := params[MetaURI]
 	if !ok {
-		return nil, errors.New("Index missing from meta request")
+		return nil, errors.New("URI missing from meta request")
 	}
 	store, ok := params[StoreType]
 	if !ok {
@@ -156,7 +156,7 @@ func NewMetaRequest(params map[string]string) (*meta.Request, error) {
 	}
 	return &meta.Request{
 		Type:  typ,
-		Index: index,
+		URI:   uri,
 		Store: store,
 	}, nil
 }
