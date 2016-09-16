@@ -1,40 +1,21 @@
-hash: c7aed4fcb07e099d88ed663c3183539a65f5fb14ef98bb85ee5a166e00765e31
-updated: 2016-06-15T16:59:38.446647073-04:00
+hash: c1e8f60df0c9e81333e79addff5292c933c463280a3e11f3602ba87039fcf668
+updated: 2016-09-16T16:14:29.178783078-04:00
 imports:
-- name: github.com/coocood/freecache
-  version: 1aa53c26cb85c33eef6d832305447982e95f844c
-- name: github.com/garyburd/redigo
-  version: b8dc90050f24c1a73a52f107f3f575be67b21b7c
-  subpackages:
-  - redis
-  - internal
-- name: github.com/goji/param
-  version: 0b4aa9fcd96f890c0ae685fc425d85b80a7bed52
 - name: github.com/gorilla/websocket
-  version: 1f512fc3f05332ba7117626cdfb4e07474e58e60
-- name: github.com/mattn/go-colorable
-  version: 9056b7a9f2d1f2d96498d6d146acd1f9d5ed3d59
-- name: github.com/mattn/go-isatty
-  version: 56b76bdf51f7708750eac80fa38b952bb9f32639
+  version: 2d1e4548da234d9cb742cc3628556fef86aafbac
 - name: github.com/mgutz/ansi
   version: c286dcecd19ff979eeb73ea444e479b903f2cfcb
 - name: github.com/Sirupsen/logrus
   version: f3cfb454f4c209e6668c95216c4744b8fddb2356
-- name: github.com/spaolacci/murmur3
-  version: 0d12bf811670bf6a1a63828dfbd003eded177fce
 - name: github.com/unchartedsoftware/plog
   version: a69182e118d2df5f5c7319cab3458309400b9626
 - name: github.com/unchartedsoftware/prism
-  version: 2ad87d42c0eedf68c9b4506177650dacbe4a7680
+  version: 5178caf650b96ceee0ee6319419c2775311376ae
   subpackages:
   - binning
   - generation/meta
   - generation/tile
   - util
-  - generation/elastic/agg
-  - generation/elastic/param
-  - generation/elastic/query
-  - util/json
   - store
   - util/promise
 - name: github.com/vova616/xxhash
@@ -44,21 +25,8 @@ imports:
   subpackages:
   - web
   - web/mutil
-  - bind
-  - graceful
-  - web/middleware
-  - graceful/listener
 - name: golang.org/x/sys
   version: 62bee037599929a6e9146f29d10dd5208c43507d
   subpackages:
   - unix
-- name: gopkg.in/airbrake/gobrake.v2
-  version: 31c8ff1fb8b79a6947e6565e9a6df535f98a6b94
-- name: gopkg.in/gemnasium/logrus-airbrake-hook.v2
-  version: 31e6fd4bd5a98d8ee7673d24bc54ec73c31810dd
-- name: gopkg.in/olivere/elastic.v3
-  version: 7a92d18eaf7a9f95d603e70970fb5adcd4dc62f1
-  subpackages:
-  - backoff
-  - uritemplates
-devImports: []
+testImports: []
