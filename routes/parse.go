@@ -129,7 +129,7 @@ func NewTileRequest(url map[string]string, body io.ReadCloser) (*tile.Request, e
 	}
 	return &tile.Request{
 		Type: typ,
-		URI: uri,
+		URI:  uri,
 		Coord: &binning.TileCoord{
 			X: uint32(x),
 			Y: uint32(y),
@@ -156,7 +156,7 @@ func NewMetaRequest(params map[string]string) (*meta.Request, error) {
 	}
 	return &meta.Request{
 		Type:  typ,
-		URI: uri,
+		URI:   uri,
 		Store: store,
 	}, nil
 }
