@@ -10,7 +10,7 @@ imports:
 - name: github.com/unchartedsoftware/plog
   version: 24c9313ea3ff2a86868f9961420e5b72fb83a019
 - name: github.com/unchartedsoftware/prism
-  version: 5178caf650b96ceee0ee6319419c2775311376ae
+  version: 5e4d3fd107f64ca39abfb32756cb22dc42aa465a
   repo: git@github.com:unchartedsoftware/prism.git
   vcs: git
   subpackages:
