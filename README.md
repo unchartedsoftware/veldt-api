@@ -40,7 +40,7 @@ Install dependencies
 
 ```bash
 cd prism-server
-make deps
+make install
 ```
 
 ## Usage
