@@ -1,22 +1,24 @@
-hash: c1e8f60df0c9e81333e79addff5292c933c463280a3e11f3602ba87039fcf668
-updated: 2016-09-16T16:14:29.178783078-04:00
+hash: 625eea778360d7a729ef9ffe674454ea7a5a961eafd4b1661d169d885920143e
+updated: 2016-09-28T14:46:18.008805205-04:00
 imports:
 - name: github.com/gorilla/websocket
   version: 2d1e4548da234d9cb742cc3628556fef86aafbac
 - name: github.com/mgutz/ansi
   version: c286dcecd19ff979eeb73ea444e479b903f2cfcb
 - name: github.com/Sirupsen/logrus
-  version: f3cfb454f4c209e6668c95216c4744b8fddb2356
+  version: 3ec0642a7fb6488f65b06f9040adc67e3990296a
 - name: github.com/unchartedsoftware/plog
-  version: a69182e118d2df5f5c7319cab3458309400b9626
+  version: 24c9313ea3ff2a86868f9961420e5b72fb83a019
 - name: github.com/unchartedsoftware/prism
   version: 5178caf650b96ceee0ee6319419c2775311376ae
+  repo: git@github.com:unchartedsoftware/prism.git
+  vcs: git
   subpackages:
   - binning
   - generation/meta
   - generation/tile
-  - util
   - store
+  - util
   - util/promise
 - name: github.com/vova616/xxhash
   version: f0a9a8b74d487f9563a527daf3bd6b4fbd3f5d00
@@ -26,7 +28,7 @@ imports:
   - web
   - web/mutil
 - name: golang.org/x/sys
-  version: 62bee037599929a6e9146f29d10dd5208c43507d
+  version: 8f0908ab3b2457e2e15403d3697c9ef5cb4b57a9
   subpackages:
   - unix
 testImports: []
