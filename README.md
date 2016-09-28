@@ -2,7 +2,7 @@
 
 ## Dependencies
 
-- Requires the [Go](https://golang.org/) programming language binaries with the `GOPATH` environment variable specified.
+Requires the [Go](https://golang.org/) programming language binaries with the `GOPATH` environment variable specified and `$GOPATH/bin` in your `PATH`.
 
 ## Installation
 
