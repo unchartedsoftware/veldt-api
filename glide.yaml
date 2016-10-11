@@ -4,7 +4,7 @@ import:
   version: 2d1e4548da234d9cb742cc3628556fef86aafbac
 - package: github.com/unchartedsoftware/plog
 - package: github.com/unchartedsoftware/prism
-  version: 5e4d3fd107f64ca39abfb32756cb22dc42aa465a
+  version: 5398bee8edd24e1a923ae04df8e18b9def146daa
   repo: git@github.com:unchartedsoftware/prism.git
   vcs: git
 - package: github.com/vova616/xxhash

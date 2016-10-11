@@ -1,5 +1,5 @@
-hash: 625eea778360d7a729ef9ffe674454ea7a5a961eafd4b1661d169d885920143e
-updated: 2016-09-28T14:46:18.008805205-04:00
+hash: d4dc77c7c2504f34fd2f7bb295f1d770b3b4b3cf8052c56c2d9dec699e53e485
+updated: 2016-10-11T13:34:08.576840439-04:00
 imports:
 - name: github.com/gorilla/websocket
   version: 2d1e4548da234d9cb742cc3628556fef86aafbac
@@ -10,7 +10,7 @@ imports:
 - name: github.com/unchartedsoftware/plog
   version: 24c9313ea3ff2a86868f9961420e5b72fb83a019
 - name: github.com/unchartedsoftware/prism
-  version: 5e4d3fd107f64ca39abfb32756cb22dc42aa465a
+  version: 5398bee8edd24e1a923ae04df8e18b9def146daa
   repo: git@github.com:unchartedsoftware/prism.git
   vcs: git
   subpackages:
