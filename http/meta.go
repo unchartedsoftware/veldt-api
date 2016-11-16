@@ -19,7 +19,7 @@ func MetaRoute(pipeline string) string {
 }
 
 // MetaHandler represents the HTTP route response handler.
-func MetaHandler(pipeline string) HandlerFunc {
+func MetaHandler(pipeline string) web.HandlerFunc {
 	return func(c web.C, w http.ResponseWriter, r *http.Request) {
 		// set content type response header
 		w.Header().Set("Content-Type", "application/json")

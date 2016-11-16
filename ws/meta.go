@@ -18,7 +18,7 @@ func MetaRoute(pipeline string) string {
 }
 
 // MetaHandler represents the HTTP route response handler.
-func MetaHandler(pipeline string) HandlerFunc {
+func MetaHandler(pipeline string) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		// create conn
 		conn, err := NewConnection(w, r, handleMetaRequest(pipeline))

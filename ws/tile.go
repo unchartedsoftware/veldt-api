@@ -18,7 +18,7 @@ func TileRoute(pipeline string) string {
 }
 
 // TileHandler represents the HTTP route response handler.
-func TileHandler(pipeline string) HandlerFunc {
+func TileHandler(pipeline string) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		// create conn
 		conn, err := NewConnection(w, r, handleTileRequest(pipeline))

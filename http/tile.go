@@ -19,7 +19,7 @@ func TileRoute(pipeline string) string {
 }
 
 // TileHandler represents the HTTP route response handler.
-func TileHandler(pipeline string) HandlerFunc {
+func TileHandler(pipeline string) web.HandlerFunc {
 	return func(c web.C, w http.ResponseWriter, r *http.Request) {
 		// set content type response header
 		w.Header().Set("Content-Type", "application/json")

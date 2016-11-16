@@ -49,15 +49,13 @@ This package provides a suite of HTTP and WebSocket handlers to connect the cust
 
 ## Example
 
-This minimalistic application shows how to register custom tile and meta data generators and connect them to a redis store.
-
 ```go
 package main
 
 import (
 	"net/http"
 
-    "github.com/zenazn/goji"
+	"github.com/zenazn/goji"
 
 	"github.com/unchartedsoftware/prism/generation/elastic"
 	"github.com/unchartedsoftware/prism/generation/meta"
@@ -65,59 +63,27 @@ import (
 	"github.com/unchartedsoftware/prism/store"
 	"github.com/unchartedsoftware/prism/store/redis"
 
-	"github.com/unchartedsoftware/prism-server/routes/dispatch"
-	"github.com/unchartedsoftware/prism-server/routes/meta"
-	"github.com/unchartedsoftware/prism-server/routes/tile"
+	"github.com/unchartedsoftware/prism-server/http"
+	"github.com/unchartedsoftware/prism-server/ws"
 )
 
 func main() {
-	// Register the in-memory store
-	store.Register("redis", redis.NewConnection("localhost", "6379"))
-	// Register a custom tile and meta data generators
-	tile.Register("heatmap", elastic.NewHeatmapTile("http://localhost", "9200"))
-	meta.Register("default", elastic.NewDefaultMeta("http://localhost", "9200"))
-    // Set the dispatching routes, these endpoints are used to initiate tiling
-    // and meta data generation requests over websocket, providing full duplex
-    // communication and allowing the server to inform the client the moment the
-    // data is ready.
-    goji.Get(dispatch.MetaRoute, dispatch.MetaHandler)
-    goji.Get(dispatch.TileRoute, dispatch.TileHandler)
-    // Set the tile request handler, once tile data is ready, this endpoint can
-	// be used to get the generated tile data. If no data is ready this endpoint
-    // will attempt to generate it.
-    goji.Get(tile.Route, tile.Handler)
-    // Set the metadata request handler, this will allow the client to request
-	// metadata. If no data is ready this endpoint will attempt to generate it.
-    goji.Get(meta.Route, meta.Handler)
+	// Set the websocket routes, these endpoints are used to initiate tiling
+	// and meta data generation requests over websocket, providing full duplex
+	// communication and allowing the server to inform the client the moment the
+	// data is ready.
+	goji.Get(ws.MetaRoute("elastic"), ws.MetaHandler("elastic"))
+	goji.Get(ws.TileRoute("elastic"), ws.TileHandler("elastic"))
+	// Set the metadata HTTP request handler, this will allow the client to
+	// request metadata. If no data is ready this endpoint will attempt to generate it.
+	goji.Get(http.MetaRoute("elastic"), http.MetaHandler("elastic"))
+	// Set the tile HTTP request handler, once tile data is ready, this endpoint
+	// can be used to get the generated tile data. If no data is ready this
+	// endpoint will attempt to generate it.
+	goji.Get(http.TileRoute("elastic"), http.TileHandler("elastic"))
 	// Greedy route last for static serving
 	goji.Get("/*", http.FileServer(http.Dir("./public")))
 	// Start the server
 	goji.Serve()
 }
 ```
-
-Start the server:
-
-```bash
-go run main.go
-```
-
-Generate meta data:
-
-```bash
-curl -X GET 'http://localhost:8080/default/test_index/redis'
-```
-
-This HTTP request results in the following actions:
-- Generation of meta data using the `default` generator on the `test_index` index of an elasticsearch instance running on `http://localhost:9200`
-- Caching of the generated data in a `redis` store running on `localhost:6379`.
-
-Generate a tile:
-
-```bash
-curl -X GET 'http://localhost:8080/heatmap/test_index/redis/4/12/12'
-```
-
-This HTTP request results in the following actions:
-- Generation of a tile using the `heatmap` generator on the `test` index of an elasticsearch instance running on `http://localhost:9200`
-- Caching of the generated tile in a `redis` store running on `localhost:6379`.
