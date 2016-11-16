@@ -6,7 +6,6 @@ import (
 
 	"github.com/unchartedsoftware/plog"
 	"github.com/unchartedsoftware/prism"
-	"github.com/zenazn/goji/web"
 )
 
 const (
@@ -19,8 +18,8 @@ func TileRoute(pipeline string) string {
 }
 
 // TileHandler represents the HTTP route response handler.
-func TileHandler(pipeline string) web.HandlerFunc {
-	return func(c web.C, w http.ResponseWriter, r *http.Request) {
+func TileHandler(pipeline string) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
 		// set content type response header
 		w.Header().Set("Content-Type", "application/json")
 		// parse tile req from URL and body

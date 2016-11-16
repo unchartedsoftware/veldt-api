@@ -8,13 +8,12 @@ import (
 
 	"github.com/unchartedsoftware/plog"
 	"github.com/vova616/xxhash"
-	"github.com/zenazn/goji/web"
 	"github.com/zenazn/goji/web/mutil"
 )
 
 // Log is a middleware that logs each request. When standard output is a
 // TTY, Log will print in color, otherwise it will print in black and white.
-func Log(c *web.C, h http.Handler) http.Handler {
+func Log(h http.Handler) http.Handler {
 	fn := func(w http.ResponseWriter, r *http.Request) {
 		if isWebsocketUpgrade(r) {
 			// do not log websocket connections
@@ -55,7 +54,7 @@ func printResp(r *http.Request, w mutil.WriterProxy, dt time.Duration) {
 		// hash query params
 		cW(&buf, bBlack, "?")
 		hash := xxhash.Checksum32([]byte(urlsplit[1]))
-		cW(&buf, randColor(hash), "%#x ", hash)
+		cW(&buf, bGreen, "%#x ", hash)
 	} else {
 		buf.WriteString(" ")
 	}
