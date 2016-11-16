@@ -6,7 +6,7 @@ import (
 	"strings"
 	"time"
 
-	log "github.com/unchartedsoftware/plog"
+	"github.com/unchartedsoftware/plog"
 	"github.com/vova616/xxhash"
 	"github.com/zenazn/goji/web"
 	"github.com/zenazn/goji/web/mutil"
@@ -18,8 +18,8 @@ func Log(c *web.C, h http.Handler) http.Handler {
 	fn := func(w http.ResponseWriter, r *http.Request) {
 		if isWebsocketUpgrade(r) {
 			// do not log websocket connections
-			// TODO: intercept and log the beginning and the end of
-			// the connection.
+			// TODO: intercept and log the beginning and the end of the
+			// connection.
 			h.ServeHTTP(w, r)
 			return
 		}

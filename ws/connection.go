@@ -1,8 +1,7 @@
-package dispatch
+package ws
 
 import (
 	"net/http"
-	"runtime"
 	"sync"
 	"time"
 
@@ -22,18 +21,18 @@ var upgrader = websocket.Upgrader{
 	},
 }
 
-// Dispatcher represents a single clients tile dispatcher.
-type Dispatcher struct {
+// requestHandler represents a handler for the ws request.
+type requestHandler func(*Connection, []byte)
+
+// Connection represents a single clients tile dispatcher.
+type Connection struct {
 	conn    *websocket.Conn
-	handler RequestHandler
-	mutex   sync.Mutex
+	mu      *sync.Mutex
+	handler requestHandler
 }
 
-// RequestHandler represents a handler for the ws request.
-type RequestHandler func(*Dispatcher, []byte)
-
-// NewDispatcher returns a pointer to a new tile dispatcher object.
-func NewDispatcher(w http.ResponseWriter, r *http.Request, handler RequestHandler) (*Dispatcher, error) {
+// NewConnection returns a pointer to a new tile dispatcher object.
+func NewConnection(w http.ResponseWriter, r *http.Request, handler requestHandler) (*Connection, error) {
 	// open a websocket connection
 	conn, err := upgrader.Upgrade(w, r, nil)
 	if err != nil {
@@ -41,40 +40,42 @@ func NewDispatcher(w http.ResponseWriter, r *http.Request, handler RequestHandle
 	}
 	// set the message read limit
 	conn.SetReadLimit(maxMessageSize)
-	return &Dispatcher{
+	return &Connection{
 		conn:    conn,
 		handler: handler,
-		mutex:   sync.Mutex{},
+		mu:      &sync.Mutex{},
 	}, nil
 }
 
 // ListenAndRespond waits on both tile request and responses and handles each
 // until the websocket connection dies.
-func (d *Dispatcher) ListenAndRespond() error {
+func (c *Connection) ListenAndRespond() error {
 	for {
 		// wait on read
-		_, msg, err := d.conn.ReadMessage()
+		_, msg, err := c.conn.ReadMessage()
 		if err != nil {
 			return err
 		}
 		// handle the message
-		go d.handler(d, msg)
+		go c.handler(c, msg)
 	}
 }
 
 // SendResponse will send a json response in a thread safe manner.
-func (d *Dispatcher) SendResponse(res interface{}) error {
+func (c *Connection) SendResponse(res interface{}) error {
 	// writes are not thread safe
-	d.mutex.Lock()
-	defer runtime.Gosched()
-	defer d.mutex.Unlock()
+	c.mu.Lock()
+	defer c.mu.Unlock()
 	// write response to websocket
-	d.conn.SetWriteDeadline(time.Now().Add(writeWait))
-	return d.conn.WriteJSON(res)
+	c.conn.SetWriteDeadline(time.Now().Add(writeWait))
+	return c.conn.WriteJSON(res)
 }
 
 // Close closes the dispatchers websocket connection.
-func (d *Dispatcher) Close() {
+func (c *Connection) Close() {
+	// ensure we aren't closing during a write
+	c.mu.Lock()
+	defer c.mu.Unlock()
 	// close websocket connection
-	d.conn.Close()
+	c.conn.Close()
 }
