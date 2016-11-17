@@ -1,13 +1,10 @@
 package: github.com/unchartedsoftware/prism-server
 import:
 - package: github.com/gorilla/websocket
-  version: 2d1e4548da234d9cb742cc3628556fef86aafbac
+- package: github.com/mattn/go-isatty
+- package: github.com/mgutz/ansi
 - package: github.com/unchartedsoftware/plog
 - package: github.com/unchartedsoftware/prism
-  version: 5398bee8edd24e1a923ae04df8e18b9def146daa
   repo: git@github.com:unchartedsoftware/prism.git
   vcs: git
 - package: github.com/vova616/xxhash
-  version: f0a9a8b74d487f9563a527daf3bd6b4fbd3f5d00
-- package: github.com/zenazn/goji
-  version: 64eb34159fe53473206c2b3e70fe396a639452f2
