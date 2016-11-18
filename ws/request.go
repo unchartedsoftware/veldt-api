@@ -7,7 +7,7 @@ import (
 // parseRequestJSON parses the incoming request body as JSON.
 func parseRequestJSON(bytes []byte) (map[string]interface{}, error) {
 	var req map[string]interface{}
-	err := json.Unmarshal(bytes, req)
+	err := json.Unmarshal(bytes, &req)
 	if err != nil {
 		return nil, err
 	}

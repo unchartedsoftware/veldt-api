@@ -61,7 +61,7 @@ func handleTileRequest(pipeline string) requestHandler {
 			log.Warn(err)
 		}
 		// create response by appending success / error fields
-		req["success"] = err != nil
+		req["success"] = err == nil
 		req["error"] = err
 		// send response
 		err = conn.SendResponse(req)
