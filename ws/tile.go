@@ -50,6 +50,7 @@ func handleTileRequest(conn *Connection, msg []byte) {
 	pipeline, ok := json.GetString(req, "pipeline")
 	if !ok {
 		// send error response
+		err := fmt.Errorf(`no "pipeline" argument is provided`)
 		err = handleErr(conn, err)
 		if err != nil {
 			log.Warn(err)
@@ -60,10 +61,12 @@ func handleTileRequest(conn *Connection, msg []byte) {
 	err = prism.GenerateTile(pipeline, req)
 	if err != nil {
 		log.Warn(err)
+		req["success"] = false
+		req["error"] = formatErr(err)
+	} else {
+		req["success"] = true
+		req["error"] = nil
 	}
-	// create response by appending success / error fields
-	req["success"] = err == nil
-	req["error"] = err
 	// send response
 	err = conn.SendResponse(req)
 	if err != nil {

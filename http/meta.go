@@ -1,6 +1,7 @@
 package http
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/unchartedsoftware/plog"
@@ -28,6 +29,7 @@ func MetaHandler(w http.ResponseWriter, r *http.Request) {
 	pipeline, ok := json.GetString(req, "pipeline")
 	if !ok {
 		// send error response
+		err := fmt.Errorf(`no "pipeline" argument is provided`)
 		log.Warn(err)
 		handleErr(w, err)
 		return

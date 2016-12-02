@@ -1,30 +1,27 @@
 package http
 
 import (
+	"encoding/json"
 	"fmt"
 	"net/http"
-	"strings"
 
-	"github.com/unchartedsoftware/prism/util/color"
+	"github.com/unchartedsoftware/plog"
+
+	"github.com/unchartedsoftware/prism-server/util"
 )
-
-const (
-	indent = "    "
-)
-
-func formatErr(err error) string {
-	str := color.RemoveColor(err.Error())
-	return strings.Replace(str, "\"", "\\\"", -1)
-}
 
 func handleErr(w http.ResponseWriter, err error) {
 	// write error header
 	w.WriteHeader(500)
 	// error string
-	str := fmt.Sprintf("{\n%s\"success\": \"false\",\n%s\"error\": \"%s\"\n}",
-		indent,
-		indent,
-		formatErr(err))
+	bytes, err := json.Marshal(map[string]interface{}{
+		"success": false,
+		"error":   util.FormatErr(err),
+	})
+	if err != nil {
+		log.Warn(err)
+		return
+	}
 	// write error
-	fmt.Fprint(w, str)
+	fmt.Fprint(w, string(bytes))
 }
