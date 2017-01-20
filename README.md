@@ -24,7 +24,7 @@ This is the recommended way to install the package and ensures all transitive de
 glide get github.com/unchartedsoftware/prism
 ```
 
-NOTE: Requires [Glide](https://glide.sh) along with [Go](https://golang.org/) version 1.6, or version 1.5 with the `GO15VENDOREXPERIMENT` environment variable set to `1`.
+NOTE: Requires [Glide](https://glide.sh) along with [Go](https://golang.org/) version 1.6+.
 
 ## Development
 
@@ -53,36 +53,34 @@ This package provides a suite of HTTP and WebSocket handlers to connect the cust
 package main
 
 import (
-	"net/http"
-
-	"github.com/zenazn/goji"
-
-	"github.com/unchartedsoftware/prism/generation/elastic"
-	"github.com/unchartedsoftware/prism/generation/meta"
-	"github.com/unchartedsoftware/prism/generation/tile"
-	"github.com/unchartedsoftware/prism/store"
-	"github.com/unchartedsoftware/prism/store/redis"
-
+	"github.com/zenazn/goji/web"
 	"github.com/unchartedsoftware/prism-server/http"
+	"github.com/unchartedsoftware/prism-server/middleware"
 	"github.com/unchartedsoftware/prism-server/ws"
 )
 
 func main() {
-	// Set the websocket routes, these endpoints are used to initiate tiling
-	// and meta data generation requests over websocket, providing full duplex
-	// communication and allowing the server to inform the client the moment the
-	// data is ready.
-	goji.Get(ws.MetaRoute("elastic"), ws.MetaHandler("elastic"))
-	goji.Get(ws.TileRoute("elastic"), ws.TileHandler("elastic"))
-	// Set the metadata HTTP request handler, this will allow the client to
-	// request metadata. If no data is ready this endpoint will attempt to generate it.
-	goji.Get(http.MetaRoute("elastic"), http.MetaHandler("elastic"))
-	// Set the tile HTTP request handler, once tile data is ready, this endpoint
-	// can be used to get the generated tile data. If no data is ready this
-	// endpoint will attempt to generate it.
-	goji.Get(http.TileRoute("elastic"), http.TileHandler("elastic"))
-	// Greedy route last for static serving
-	goji.Get("/*", http.FileServer(http.Dir("./public")))
+
+	// Mount logger middleware
+	goji.Use(middleware.Log)
+	// Mount gzip middleware
+	goji.Use(middleware.Gzip)
+
+	// Meta websocket handler
+	log.Infof("Meta WebSocket route: '%s'", ws.MetaRoute)
+	goji.Get(ws.MetaRoute, ws.MetaHandler)
+
+	// Tile websocket handler
+	log.Infof("Tile WebSocket route: '%s'", ws.TileRoute)
+	goji.Get(ws.TileRoute, ws.TileHandler)
+
+	// Meta request handler
+	log.Infof("Meta HTTP route: '%s'", http.MetaRoute)
+	goji.Post(http.MetaRoute, http.MetaHandler)
+	// Tile request handler
+	log.Infof("Tile HTTP route: '%s'", http.TileRoute)
+	goji.Post(http.TileRoute, http.TileHandler)
+
 	// Start the server
 	goji.Serve()
 }
