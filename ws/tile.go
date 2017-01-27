@@ -5,8 +5,8 @@ import (
 	"net/http"
 
 	"github.com/unchartedsoftware/plog"
-	"github.com/unchartedsoftware/prism"
-	"github.com/unchartedsoftware/prism/util/json"
+	"github.com/unchartedsoftware/veldt"
+	"github.com/unchartedsoftware/veldt/util/json"
 )
 
 const (
@@ -58,7 +58,7 @@ func handleTileRequest(conn *Connection, msg []byte) {
 		return
 	}
 	// generate tile and wait on response
-	err = prism.GenerateTile(pipeline, req)
+	err = veldt.GenerateTile(pipeline, req)
 	if err != nil {
 		log.Warn(err)
 		req["success"] = false

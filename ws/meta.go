@@ -5,8 +5,8 @@ import (
 	"net/http"
 
 	"github.com/unchartedsoftware/plog"
-	"github.com/unchartedsoftware/prism"
-	"github.com/unchartedsoftware/prism/util/json"
+	"github.com/unchartedsoftware/veldt"
+	"github.com/unchartedsoftware/veldt/util/json"
 )
 
 const (
@@ -58,7 +58,7 @@ func handleMetaRequest(conn *Connection, msg []byte) {
 		return
 	}
 	// generate meta data and wait on response
-	err = prism.GenerateMeta(pipeline, req)
+	err = veldt.GenerateMeta(pipeline, req)
 	if err != nil {
 		log.Warn(err)
 		req["success"] = false

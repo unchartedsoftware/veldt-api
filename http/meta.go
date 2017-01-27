@@ -5,8 +5,8 @@ import (
 	"net/http"
 
 	"github.com/unchartedsoftware/plog"
-	"github.com/unchartedsoftware/prism"
-	"github.com/unchartedsoftware/prism/util/json"
+	"github.com/unchartedsoftware/veldt"
+	"github.com/unchartedsoftware/veldt/util/json"
 )
 
 const (
@@ -35,14 +35,14 @@ func MetaHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	// ensure it's generated
-	err = prism.GenerateMeta(pipeline, req)
+	err = veldt.GenerateMeta(pipeline, req)
 	if err != nil {
 		log.Warn(err)
 		handleErr(w, err)
 		return
 	}
 	// get meta data from store
-	meta, err := prism.GetMetaFromStore(pipeline, req)
+	meta, err := veldt.GetMetaFromStore(pipeline, req)
 	if err != nil {
 		log.Warn(err)
 		handleErr(w, err)

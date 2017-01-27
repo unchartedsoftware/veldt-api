@@ -5,8 +5,8 @@ import (
 	"net/http"
 
 	"github.com/unchartedsoftware/plog"
-	"github.com/unchartedsoftware/prism"
-	"github.com/unchartedsoftware/prism/util/json"
+	"github.com/unchartedsoftware/veldt"
+	"github.com/unchartedsoftware/veldt/util/json"
 )
 
 const (
@@ -35,14 +35,14 @@ func TileHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	// ensure it's generated
-	err = prism.GenerateTile(pipeline, req)
+	err = veldt.GenerateTile(pipeline, req)
 	if err != nil {
 		log.Warn(err)
 		handleErr(w, err)
 		return
 	}
 	// get tile data from store
-	tile, err := prism.GetTileFromStore(pipeline, req)
+	tile, err := veldt.GetTileFromStore(pipeline, req)
 	if err != nil {
 		log.Warn(err)
 		handleErr(w, err)

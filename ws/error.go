@@ -1,7 +1,7 @@
 package ws
 
 import (
-	"github.com/unchartedsoftware/prism-server/util"
+	"github.com/unchartedsoftware/veldt-api/util"
 )
 
 func formatErr(err error) string {

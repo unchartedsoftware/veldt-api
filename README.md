@@ -1,4 +1,10 @@
-# Prism-Server
+# veldt-api
+
+> Scalable on-demand tile-based analytics
+
+[![Godoc](http://img.shields.io/badge/godoc-reference-blue.svg?style=flat)](http://godoc.org/github.com/unchartedsoftware/veldt-api)
+[![Build Status](https://travis-ci.org/unchartedsoftware/veldt-api.svg?branch=master)](https://travis-ci.org/unchartedsoftware/veldt-api)
+[![Go Report Card](https://goreportcard.com/badge/github.com/unchartedsoftware/veldt-api)](https://goreportcard.com/report/github.com/unchartedsoftware/veldt-api)
 
 ## Dependencies
 
@@ -11,7 +17,7 @@ Requires the [Go](https://golang.org/) programming language binaries with the `G
 If your project does not use the vendoring tool [Glide](https://glide.sh) to manage dependencies, you can install this package like you would any other:
 
 ```bash
-go get github.com/unchartedsoftware/prism
+go get github.com/unchartedsoftware/veldt-api
 ```
 
 While this is the simplest way to install the package, due to how `go get` resolves transitive dependencies it may result in version incompatibilities.
@@ -21,7 +27,7 @@ While this is the simplest way to install the package, due to how `go get` resol
 This is the recommended way to install the package and ensures all transitive dependencies are resolved to their compatible versions.
 
 ```bash
-glide get github.com/unchartedsoftware/prism
+glide get github.com/unchartedsoftware/veldt-api
 ```
 
 NOTE: Requires [Glide](https://glide.sh) along with [Go](https://golang.org/) version 1.6+.
@@ -33,19 +39,19 @@ Clone the repository:
 ```bash
 mkdir $GOPATH/src/github.com/unchartedsoftware
 cd $GOPATH/src/github.com/unchartedsoftware
-git clone git@github.com:unchartedsoftware/prism-server.git
+git clone git@github.com:unchartedsoftware/veldt-api.git
 ```
 
 Install dependencies
 
 ```bash
-cd prism-server
+cd veldt-api
 make install
 ```
 
 ## Usage
 
-This package provides a suite of HTTP and WebSocket handlers to connect the custom live tiling analytics of [prism](https://github.com/unchartedsoftware/prism/) to expressive REST and WebSocket endpoints. This package leverages the power of [goji](https://goji.io/), a minimalistic and feature rich web framework.
+This package provides HTTP and WebSocket handlers to connect the on-demand tile-based analytics of [veldt](https://github.com/unchartedsoftware/veldt/) to  HTTP and WebSocket endpoints.
 
 ## Example
 
@@ -53,10 +59,10 @@ This package provides a suite of HTTP and WebSocket handlers to connect the cust
 package main
 
 import (
-	"github.com/zenazn/goji/web"
-	"github.com/unchartedsoftware/prism-server/http"
-	"github.com/unchartedsoftware/prism-server/middleware"
-	"github.com/unchartedsoftware/prism-server/ws"
+	"github.com/zenazn/goji"
+	"github.com/unchartedsoftware/veldt-api/http"
+	"github.com/unchartedsoftware/veldt-api/middleware"
+	"github.com/unchartedsoftware/veldt-api/ws"
 )
 
 func main() {

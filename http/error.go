@@ -7,7 +7,7 @@ import (
 
 	"github.com/unchartedsoftware/plog"
 
-	"github.com/unchartedsoftware/prism-server/util"
+	"github.com/unchartedsoftware/veldt-api/util"
 )
 
 func handleErr(w http.ResponseWriter, err error) {
