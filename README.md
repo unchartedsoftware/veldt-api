@@ -1,7 +1,5 @@
 # veldt-api
 
-> Scalable on-demand tile-based analytics
-
 [![Godoc](http://img.shields.io/badge/godoc-reference-blue.svg?style=flat)](http://godoc.org/github.com/unchartedsoftware/veldt-api)
 [![Build Status](https://travis-ci.org/unchartedsoftware/veldt-api.svg?branch=master)](https://travis-ci.org/unchartedsoftware/veldt-api)
 [![Go Report Card](https://goreportcard.com/badge/github.com/unchartedsoftware/veldt-api)](https://goreportcard.com/report/github.com/unchartedsoftware/veldt-api)
