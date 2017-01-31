@@ -31,7 +31,7 @@ func Log(h http.Handler) http.Handler {
 			h.ServeHTTP(w, r)
 			return
 		}
-		lw := WrapWriter(w)
+		lw := wrapWriter(w)
 		t1 := time.Now()
 		h.ServeHTTP(lw, r)
 		if lw.Status() == 0 {
@@ -53,7 +53,7 @@ func write(b *bytes.Buffer, color string, format string, args ...interface{}) {
 	}
 }
 
-func logResponse(r *http.Request, w WriterProxy, dt time.Duration) {
+func logResponse(r *http.Request, w writerProxy, dt time.Duration) {
 	var buf bytes.Buffer
 	// write HTTP method
 	write(&buf, ansi.Magenta, "%s ", r.Method)

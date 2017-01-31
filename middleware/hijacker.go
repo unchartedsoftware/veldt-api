@@ -34,9 +34,9 @@ IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-// WriterProxy is a proxy around an http.ResponseWriter that allows you to hook
+// writerProxy is a proxy around an http.ResponseWriter that allows you to hook
 // into various parts of the response process.
-type WriterProxy interface {
+type writerProxy interface {
 	http.ResponseWriter
 	// Status returns the HTTP status of the request, or 0 if one has not
 	// yet been sent.
@@ -54,9 +54,9 @@ type WriterProxy interface {
 	Unwrap() http.ResponseWriter
 }
 
-// WrapWriter wraps an http.ResponseWriter, returning a proxy that allows you to
+// wrapWriter wraps an http.ResponseWriter, returning a proxy that allows you to
 // hook into various parts of the response process.
-func WrapWriter(w http.ResponseWriter) WriterProxy {
+func wrapWriter(w http.ResponseWriter) writerProxy {
 	_, cn := w.(http.CloseNotifier)
 	_, fl := w.(http.Flusher)
 	_, hj := w.(http.Hijacker)
