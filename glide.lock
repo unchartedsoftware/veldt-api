@@ -1,12 +1,12 @@
 hash: 885bda9ecb50156336f1de54b99451e463dcaca5a8dbe872a000acfec8c4c305
-updated: 2017-01-27T16:11:05.472136114-05:00
+updated: 2017-04-03T15:04:54.114175605-04:00
 imports:
 - name: github.com/davecgh/go-spew
   version: 346938d642f2ec3594ed81d874461961cd0faa76
   subpackages:
   - spew
 - name: github.com/gorilla/websocket
-  version: 2d1e4548da234d9cb742cc3628556fef86aafbac
+  version: 3ab3a8b8831546bd18fd182c20687ca853b2bb13
 - name: github.com/mattn/go-isatty
   version: 30a891c33c7cde7b02a981314b4228ec99380cca
 - name: github.com/mgutz/ansi
