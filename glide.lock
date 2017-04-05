@@ -14,7 +14,7 @@ imports:
 - name: github.com/unchartedsoftware/plog
   version: bbb4bc4151f23ea489aff06d2a27f10e1a935993
 - name: github.com/unchartedsoftware/veldt
-  version: 8517745aae67935c2d3533872ae92a38cfb6e3fc
+  version: 46848da33b0240add833739238741d1e86867d2c
   subpackages:
   - binning
   - util/color
