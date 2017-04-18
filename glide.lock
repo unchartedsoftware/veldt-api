@@ -1,29 +1,33 @@
 hash: 885bda9ecb50156336f1de54b99451e463dcaca5a8dbe872a000acfec8c4c305
-updated: 2017-04-03T15:04:54.114175605-04:00
+updated: 2017-04-18T12:25:44.244945821-04:00
 imports:
 - name: github.com/davecgh/go-spew
   version: 346938d642f2ec3594ed81d874461961cd0faa76
   subpackages:
   - spew
 - name: github.com/gorilla/websocket
-  version: 3ab3a8b8831546bd18fd182c20687ca853b2bb13
+  version: a91eba7f97777409bc2c443f5534d41dd20c5720
+- name: github.com/mattn/go-colorable
+  version: ded68f7a9561c023e790de24279db7ebf473ea80
 - name: github.com/mattn/go-isatty
-  version: 30a891c33c7cde7b02a981314b4228ec99380cca
+  version: fc9e8d8ef48496124e79ae0df75490096eccf6fe
 - name: github.com/mgutz/ansi
-  version: c286dcecd19ff979eeb73ea444e479b903f2cfcb
+  version: 9520e82c474b0a04dd04f8a40959027271bab992
 - name: github.com/unchartedsoftware/plog
-  version: bbb4bc4151f23ea489aff06d2a27f10e1a935993
+  version: 34d2bbd3c0a9458feb0752af2b578a23eb8ddc4f
 - name: github.com/unchartedsoftware/veldt
-  version: 46848da33b0240add833739238741d1e86867d2c
+  version: 61e0ffd9b4cdf1a8136188c6ed32dcbea92a1d13
   subpackages:
   - binning
+  - geometry
   - util/color
   - util/json
   - util/promise
+  - util/queue
 - name: github.com/vova616/xxhash
   version: f0a9a8b74d487f9563a527daf3bd6b4fbd3f5d00
 - name: golang.org/x/sys
-  version: 30237cf4eefd639b184d1f2cb77a581ea0be8947
+  version: f3918c30c5c2cb527c0b071a27c35120a6c0719a
   subpackages:
   - unix
 testImports: []
