@@ -12,6 +12,7 @@ import (
 
 func handleErr(w http.ResponseWriter, err error) {
 	// write error header
+	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(500)
 	// error string
 	bytes, err := json.Marshal(map[string]interface{}{

@@ -16,9 +16,7 @@ const (
 
 // MetaHandler represents the HTTP route response handler.
 func MetaHandler(w http.ResponseWriter, r *http.Request) {
-	// set content type response header
-	w.Header().Set("Content-Type", "application/json")
-	// parse meta req from URL
+	// parse meta req from URL and body
 	req, err := parseRequestJSON(r.Body)
 	if err != nil {
 		log.Warn(err)
@@ -34,21 +32,15 @@ func MetaHandler(w http.ResponseWriter, r *http.Request) {
 		handleErr(w, err)
 		return
 	}
-	// ensure it's generated
-	err = veldt.GenerateMeta(pipeline, req)
+	// get meta data from store, ensuring it is generated
+	meta, err := veldt.GenerateAndGetMeta(pipeline, req)
 	if err != nil {
 		log.Warn(err)
 		handleErr(w, err)
 		return
 	}
-	// get meta data from store
-	meta, err := veldt.GetMetaFromStore(pipeline, req)
-	if err != nil {
-		log.Warn(err)
-		handleErr(w, err)
-		return
-	}
-	// send response
-	w.WriteHeader(200)
+	// write response
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
 	w.Write(meta)
 }
