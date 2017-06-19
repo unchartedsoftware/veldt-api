@@ -1,5 +1,5 @@
 hash: 885bda9ecb50156336f1de54b99451e463dcaca5a8dbe872a000acfec8c4c305
-updated: 2017-04-27T16:12:19.20445892-04:00
+updated: 2017-06-19T13:05:26.119414671-04:00
 imports:
 - name: github.com/davecgh/go-spew
   version: 346938d642f2ec3594ed81d874461961cd0faa76
@@ -8,7 +8,7 @@ imports:
 - name: github.com/gorilla/websocket
   version: a91eba7f97777409bc2c443f5534d41dd20c5720
 - name: github.com/mattn/go-colorable
-  version: ded68f7a9561c023e790de24279db7ebf473ea80
+  version: 941b50ebc6efddf4c41c8e4537a5f68a4e686b24
 - name: github.com/mattn/go-isatty
   version: fc9e8d8ef48496124e79ae0df75490096eccf6fe
 - name: github.com/mgutz/ansi
@@ -16,7 +16,7 @@ imports:
 - name: github.com/unchartedsoftware/plog
   version: 34d2bbd3c0a9458feb0752af2b578a23eb8ddc4f
 - name: github.com/unchartedsoftware/veldt
-  version: 35ed74cb7d1be28714d58523f490943b2c957ade
+  version: 3b3ff9a858b987fb5ab91a782a6904f1d9666e98
   subpackages:
   - binning
   - geometry
@@ -27,7 +27,7 @@ imports:
 - name: github.com/vova616/xxhash
   version: f0a9a8b74d487f9563a527daf3bd6b4fbd3f5d00
 - name: golang.org/x/sys
-  version: 9ccfe848b9db8435a24c424abbc07a921adf1df5
+  version: fb4cac33e3196ff7f507ab9b2d2a44b0142f5b5a
   subpackages:
   - unix
 testImports: []
