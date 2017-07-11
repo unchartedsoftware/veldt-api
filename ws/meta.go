@@ -10,11 +10,11 @@ import (
 )
 
 const (
-	// MetaRoute represents the HTTP route for the resource.
+	// MetaRoute represents the WebSocket route for the resource.
 	MetaRoute = "/ws/meta"
 )
 
-// MetaHandler represents the HTTP route response handler.
+// MetaHandler represents the WebSocket route response handler.
 func MetaHandler(w http.ResponseWriter, r *http.Request) {
 	// create conn
 	conn, err := NewConnection(w, r, handleMetaRequest)

@@ -10,11 +10,11 @@ import (
 )
 
 const (
-	// TileRoute represents the HTTP route for the resource.
+	// TileRoute represents the WebSocket route for the resource.
 	TileRoute = "/ws/tile"
 )
 
-// TileHandler represents the HTTP route response handler.
+// TileHandler represents the WebSocket route response handler.
 func TileHandler(w http.ResponseWriter, r *http.Request) {
 	// create conn
 	conn, err := NewConnection(w, r, handleTileRequest)
