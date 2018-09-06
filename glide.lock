@@ -16,7 +16,7 @@ imports:
 - name: github.com/unchartedsoftware/plog
   version: 34d2bbd3c0a9458feb0752af2b578a23eb8ddc4f
 - name: github.com/unchartedsoftware/veldt
-  version: f8df4a6cd027bb701621bdc28abe05074f7d76d9
+  version: 5ec3ecce17bdf75f40bfff817f5cf0b9a48fa310
   subpackages:
   - binning
   - geometry
