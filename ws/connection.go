@@ -33,10 +33,13 @@ type Connection struct {
 
 // NewConnection returns a pointer to a new tile dispatcher object.
 func NewConnection(w http.ResponseWriter, r *http.Request, handler requestHandler) (*Connection, error) {
-	responseHeader := http.Header{
-		"Sec-WebSocket-Protocol": []string{ r.Header.Get("Sec-WebSocket-Protocol") },
+	protocol := r.Header.Get("Sec-WebSocket-Protocol")
+	var responseHeader http.Header
+	if protocol != "" {
+		responseHeader = http.Header{
+			"Sec-WebSocket-Protocol": []string{protocol},
+		}
 	}
-
 	// open a websocket connection
 	conn, err := upgrader.Upgrade(w, r, responseHeader)
 	if err != nil {
