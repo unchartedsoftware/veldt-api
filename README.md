@@ -16,7 +16,7 @@ go get github.com/unchartedsoftware/veldt-api
 
 ## Development
 
-NOTE: Requires [Go](https://golang.org/) version 1.11+.
+NOTE: Requires [Go](https://golang.org/) version 1.12+.
 
 Clone the repository outside of your `$GOPATH`:
 
