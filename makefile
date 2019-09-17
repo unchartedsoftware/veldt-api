@@ -29,6 +29,6 @@ build: lint
 	@go build $(allpackages)
 
 install:
-	@go get -u github.com/golang/lint/golint
+	@go get -u golang.org/x/lint/golint
 	@go get -u github.com/onsi/ginkgo/ginkgo
 	@go mod vendor
